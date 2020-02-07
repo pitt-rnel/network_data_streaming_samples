@@ -3,12 +3,13 @@ import json
 import os 
 import inspect
 from threading import Thread 
-import Globals 
+#import Globals
 import struct 
 import numpy as np 
-from collections import deque 
+from collections import deque
 import time 
 import math
+import socket
 
 import kivy
 kivy.require("1.9.1")
@@ -148,6 +149,7 @@ class EMGPlotterApp(App):
     self.emgCommandSocket.connect((EMG_COMMAND_IP, EMG_COMMAND_PORT))
     self.emgStreamSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     self.emgStreamSocket.connect((EMG_STREAM_IP, EMG_STREAM_PORT))
+    self.emgCommandSocket.sendall(b'START')
     self.emgCommandSocket.sendall(b'TRIGGER START\r\n\r\n')
     self.running = True
     self.emgPlotter = EMGPlotter()

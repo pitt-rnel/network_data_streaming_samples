@@ -1,6 +1,7 @@
 # Python package for unpacking binary data
 import struct 
-import time # To run the streaming loop for 5s 
+import time # To run the streaming loop for 5s
+import socket
 
 EMG_IP = "127.0.0.1"
 EMG_COMMAND_PORT = 50040
@@ -20,4 +21,5 @@ startTime = time.time()
 while time.time() - startTime <= 5:
     emgData = emgStreamSocket.recv(64)
     emgArray = struct.unpack("<16f", emgData) # 16 channels of 4 byte EMG data
+    print(emgArray)
 emgCommandSocket.sendall(b'TRIGGER STOP\r\n\r\n')
